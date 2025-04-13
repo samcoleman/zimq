@@ -443,10 +443,7 @@ fn buildLibzmq(
     inline for (@typeInfo(@TypeOf(shared_values)).@"struct".fields) |field| {
         library.root_module.addCMacro(field.name, "");
     }
-    library.root_module.addCSourceFiles(.{
-        .root = upstream.path("src"),
-        .files = &zmq_source_files,
-    });
+    library.root_module.addCSourceFiles(.{ .root = upstream.path("src"), .files = &zmq_source_files, .flags = &.{"-DZMQ_HAVE_STRLCPY"} });
 
     return library;
 }
